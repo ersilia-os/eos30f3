@@ -15,9 +15,10 @@
     "Output Shape": "List",
     "Interpretation": "The results represent predictions from the model for different chemical compounds. it indicates how likely the model thinks each compound might cause heart-related issues (hERG blockers).Higher scores suggest a higher likelihood.",
     "Tag": [
+        "Cardiotoxicity",
         "hERG",
-        "channel-blockers",
-        "DMPNN"
+        "Toxicity",
+        "Descriptor"
     ],
     "Publication": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e",
     "Source Code": "https://github.com/AI-amateur/DMPNN-hERG",
