@@ -3,10 +3,10 @@
     "Slug": "hERG-Channel-Blockers-Prediction",
     "Status": "In progress",
     "Title": "Prediction of hERG Channel Blockers with Directed Message Passing Neural Networks",
-    "Description": [
+    "Description": 
         "The model uses invertible flow-based model for generating unique molecules with desired properties. The model ultimately generates molecular graphs. In this model",
         "the directed message passing neural network (D-MPNN) is applied to construct classification models for identifying hERG blockers based on diverse datasets."
-    ],
+    ,
     "Mode": "Pretrained",
     "Task": ["Classification"],
     "Input": ["Compound"],
