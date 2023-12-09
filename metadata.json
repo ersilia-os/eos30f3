@@ -15,9 +15,10 @@
     "Output Shape": "Single",
     "Interpretation": "Probability of hERG Channel Blockers",
     "Tag": [
+        "Cardiotoxicity",
         "hERG",
-        "channel-blockers",
-        "DMPNN"
+        "Toxicity",
+        "Descriptor"
     ],
     "Publication": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e",
     "Source Code": "https://github.com/AI-amateur/DMPNN-hERG",
