@@ -12,10 +12,11 @@ RUN pip install tensorboardX==2.0
 RUN pip install scipy>=1.4.1
 RUN pip install hyperopt
 
-#RUN pip install --upgrade protobuf==3.20.0
-#RUN pip install protoc >= 3.19.0
-#RUN pip install --upgrade bentoml
-#ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+RUN pip install --upgrade protobuf==3.20.0
+
+RUN pip install protoc >= 3.19.0
+RUN pip install --upgrade bentoml
+ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
 WORKDIR /repo
 COPY . /repo
