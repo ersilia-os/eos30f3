@@ -1,6 +1,5 @@
 """Defines a number of routes/views for the flask app."""
 
-from argparse import ArgumentParser, Namespace
 from functools import wraps
 import io
 import os
@@ -17,18 +16,19 @@ import numpy as np
 from rdkit import Chem
 from werkzeug.utils import secure_filename
 
-from app import app, db
+from chemprop.web.app import app, db
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 
-from chemprop.data.utils import get_data, get_header, get_smiles, validate_data
-from chemprop.parsing import add_predict_args, add_train_args, modify_predict_args, modify_train_args
-from chemprop.train.make_predictions import make_predictions
-from chemprop.train.run_training import run_training
+from chemprop.args import PredictArgs, TrainArgs
+from chemprop.constants import MODEL_FILE_NAME, TRAIN_LOGGER_NAME
+from chemprop.data import get_data, get_header, get_smiles, get_task_names, validate_data
+from chemprop.train import make_predictions, run_training
 from chemprop.utils import create_logger, load_task_names, load_args
 
 TRAINING = 0
 PROGRESS = mp.Value('d', 0.0)
+
 
 def check_not_demo(func: Callable) -> Callable:
     """
@@ -45,7 +45,8 @@ def check_not_demo(func: Callable) -> Callable:
 
     return decorated_function
 
-def progress_bar(args: Namespace, progress: mp.Value):
+
+def progress_bar(args: TrainArgs, progress: mp.Value):
     """
     Updates a progress bar displayed during training.
 
@@ -135,6 +136,7 @@ def format_float_list(array: List[float], precision: int = 4) -> List[str]:
     """
     return [format_float(f, precision) for f in array]
 
+
 @app.route('/receiver', methods=['POST'])
 @check_not_demo
 def receiver():
@@ -147,22 +149,24 @@ def home():
     """Renders the home page."""
     return render_template('home.html', users=db.get_all_users())
 
+
 @app.route('/create_user', methods=['GET', 'POST'])
 @check_not_demo
 def create_user():
-    """    
+    """
     If a POST request is made, creates a new user.
     Renders the create_user page.
     """
-    if request.method == 'GET':   
+    if request.method == 'GET':
         return render_template('create_user.html', users=db.get_all_users())
 
     new_name = request.form['newUserName']
 
-    if new_name != None:
+    if new_name is not None:
         db.insert_user(new_name)
 
     return redirect(url_for('create_user'))
+
 
 def render_train(**kwargs):
     """Renders the train page with specified kwargs."""
@@ -176,6 +180,7 @@ def render_train(**kwargs):
                            data_upload_errors=data_upload_errors,
                            users=db.get_all_users(),
                            **kwargs)
+
 
 @app.route('/train', methods=['GET', 'POST'])
 @check_not_demo
@@ -195,19 +200,23 @@ def train():
     gpu = request.form.get('gpu')
     data_path = os.path.join(app.config['DATA_FOLDER'], f'{data_name}.csv')
     dataset_type = request.form.get('datasetType', 'regression')
+    use_progress_bar = request.form.get('useProgressBar', 'True') == 'True'
 
     # Create and modify args
-    parser = ArgumentParser()
-    add_train_args(parser)
-    args = parser.parse_args([])
+    args = TrainArgs().parse_args([
+        '--data_path', data_path,
+        '--dataset_type', dataset_type,
+        '--epochs', str(epochs),
+        '--ensemble_size', str(ensemble_size),
+    ])
 
-    args.data_path = data_path
-    args.dataset_type = dataset_type
-    args.epochs = epochs
-    args.ensemble_size = ensemble_size
+    # Get task names
+    args.task_names = get_task_names(path=data_path, smiles_columns=args.smiles_columns)
 
     # Check if regression/classification selection matches data
-    data = get_data(path=data_path)
+    data = get_data(path=data_path, smiles_columns=args.smiles_columns)
+    # Set the number of molecules through the length of the smiles_columns for now, we need to add an option to the site later
+
     targets = data.targets()
     unique_targets = {target for row in targets for target in row if target is not None}
 
@@ -223,7 +232,7 @@ def train():
 
     if gpu is not None:
         if gpu == 'None':
-            args.no_cuda = True
+            args.cuda = False
         else:
             args.gpu = int(gpu)
 
@@ -242,20 +251,22 @@ def train():
 
     with TemporaryDirectory() as temp_dir:
         args.save_dir = temp_dir
-        modify_train_args(args)
 
-        process = mp.Process(target=progress_bar, args=(args, PROGRESS))
-        process.start()
-        TRAINING = 1
+        if use_progress_bar:
+            process = mp.Process(target=progress_bar, args=(args, PROGRESS))
+            process.start()
+            TRAINING = 1
 
         # Run training
-        logger = create_logger(name='train', save_dir=args.save_dir, quiet=args.quiet)
-        task_scores = run_training(args, logger)
-        process.join()
+        logger = create_logger(name=TRAIN_LOGGER_NAME, save_dir=args.save_dir, quiet=args.quiet)
+        task_scores = run_training(args, data, logger)[args.metrics[0]]
 
-        # Reset globals
-        TRAINING = 0
-        PROGRESS = mp.Value('d', 0.0)
+        if use_progress_bar:
+            process.join()
+
+            # Reset globals
+            TRAINING = 0
+            PROGRESS = mp.Value('d', 0.0)
 
         # Check if name overlap
         if checkpoint_name != ckpt_name:
@@ -320,51 +331,53 @@ def predict():
         # Get remaining smiles
         smiles.extend(get_smiles(data_path))
 
+    smiles = [[s] for s in smiles]
+
     models = db.get_models(ckpt_id)
     model_paths = [os.path.join(app.config['CHECKPOINT_FOLDER'], f'{model["id"]}.pt') for model in models]
 
     task_names = load_task_names(model_paths[0])
     num_tasks = len(task_names)
     gpu = request.form.get('gpu')
-
-    # Create and modify args
-    parser = ArgumentParser()
-    add_predict_args(parser)
-    args = parser.parse_args([])
-
-    preds_path = os.path.join(app.config['TEMP_FOLDER'], app.config['PREDICTIONS_FILENAME'])
-    args.test_path = 'None'  # TODO: Remove this hack to avoid assert crashing in modify_predict_args
-    args.preds_path = preds_path
-    args.checkpoint_paths = model_paths
-    if gpu is not None:
-        if gpu == 'None':
-            args.no_cuda = True
-        else:
-            args.gpu = int(gpu)
-
-    if hasattr(args, "features_path"):
-        del args.features_path
-
     train_args = load_args(model_paths[0])
 
-    for key, value in vars(train_args).items():
-        if not hasattr(args, key):
-            setattr(args, key, value)
+    # Build arguments
+    arguments = [
+        '--test_path', 'None',
+        '--preds_path', os.path.join(app.config['TEMP_FOLDER'], app.config['PREDICTIONS_FILENAME']),
+        '--checkpoint_paths', *model_paths
+    ]
 
-    if args.features_path != None:
-        args.features_generator = ["rdkit_2d_normalized"]
-        args.features_path = None
+    if gpu is not None:
+        if gpu == 'None':
+            arguments.append('--no_cuda')
+        else:
+            arguments += ['--gpu', gpu]
 
-    modify_predict_args(args)
+    # Handle additional features
+    if train_args.features_path is not None:
+        # TODO: make it possible to specify the features generator if trained using features_path
+        arguments += [
+            '--features_generator', 'rdkit_2d_normalized',
+            '--no_features_scaling'
+        ]
+    elif train_args.features_generator is not None:
+        arguments += ['--features_generator', *train_args.features_generator]
+
+        if not train_args.features_scaling:
+            arguments.append('--no_features_scaling')
+
+    # Parse arguments
+    args = PredictArgs().parse_args(arguments)
 
     # Run predictions
-    preds = make_predictions(args, smiles=smiles)
+    preds = make_predictions(args=args, smiles=smiles, return_uncertainty=False)
 
     if all(p is None for p in preds):
         return render_predict(errors=['All SMILES are invalid'])
 
     # Replace invalid smiles with message
-    invalid_smiles_warning = "Invalid SMILES String"
+    invalid_smiles_warning = 'Invalid SMILES String'
     preds = [pred if pred is not None else [invalid_smiles_warning] * num_tasks for pred in preds]
 
     return render_predict(predicted=True,
@@ -502,7 +515,7 @@ def upload_checkpoint(return_page: str):
     ckpt_paths = []
 
     if ckpt_ext.endswith('.pt'):
-        ckpt_path = os.path.join(temp_dir.name, 'model.pt')
+        ckpt_path = os.path.join(temp_dir.name, MODEL_FILE_NAME)
         ckpt.save(ckpt_path)
         ckpt_paths = [ckpt_path]
 
@@ -554,7 +567,7 @@ def download_checkpoint(checkpoint: int):
 
     :param checkpoint: The name of the checkpoint to download.
     """
-    ckpt = db.query_db(f'SELECT * FROM ckpt WHERE id = {checkpoint}', one = True)
+    ckpt = db.query_db(f'SELECT * FROM ckpt WHERE id = {checkpoint}', one=True)
     models = db.get_models(checkpoint)
 
     model_data = io.BytesIO()
@@ -573,6 +586,7 @@ def download_checkpoint(checkpoint: int):
         attachment_filename=f'{ckpt["ckpt_name"]}.zip',
         cache_timeout=-1
     )
+
 
 @app.route('/checkpoints/delete/<int:checkpoint>')
 @check_not_demo
