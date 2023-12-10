@@ -4,8 +4,7 @@
     "Status": "In progress",
     "Title": "Prediction of hERG Channel Blockers with Directed Message Passing Neural Networks",
     "Description": 
-        "This model is a predictive model for identifying hERG (human ether-à-go-go-related gene) blockers. The model presents an approach to predicting compounds with hERG-induced cardiotoxicity. The model uses Deep Molecular Graph Neural Networks (D-MPNN), which is a specialized deep learning design for molecules, that is used to understand complex connections within chemical compounds. The model uses D-MPNN with moe206 descriptors. The model's performance was evaluated on Cai's hERG dataset under various validation setups, including scaffold split and random split. The model's performance metrics, that is the Area Under the Receiver Operating Characteristic curve (AUC-ROC), show its effectiveness. The model outperforms other classifiers, which shows that the model is efficient in predicting hERG blockers. The model's interpretability is explained through SHAP (SHapley Additive exPlanations) analysis, which identifies key molecular descriptors influencing predictions. The key descriptors influencing predictions include h_pavgQ, logP(o/w), SlogP, vsa_pol, h_logD, and h_pkB, which aligns with known characteristics of hERG blockers. The model has a few limitations, including the need for larger datasets to enhance the training and performance of the D-MPNN + moe206 model. In conclusion, the presented model D-MPNN with moe206 descriptors is one of the best classification models for evaluating hERG blockers. Its performance contributes to the advancement of in silico methods for predicting compounds with potential hERG-induced cardiotoxicity, addressing an important aspect of drug safety in the field of drug development and can help in identifying potential risks early on."
-    ,
+        "This model leverages the ChemProp network (D-MPNN, see original Stokes et al, Cell, 2020 for more information) to build a predictor of hERG-mediated cardiotoxicity. The model has been trained using a dataset published by Cai et al, J Chem Inf Model, 2019, which contains 7889 molecules with several cut-offs for hERG blocking activity. The authors select a 10 uM cut-off. This implementation of the model does not use any specific featurizer, though the authors suggest the moe206 descriptors (closed-source) improve performance even further.",
     "Mode": "Pretrained",
     "Task": ["Classification"],
     "Input": ["Compound"],
@@ -13,7 +12,7 @@
     "Output": ["Score"],
     "Output Type": ["Float"],
     "Output Shape": "Single",
-    "Interpretation": "Probability of hERG Channel Blockers",
+    "Interpretation": "Probability of blocking hERG (cut-off: 10uM)",
     "Tag": [
         "Cardiotoxicity",
         "hERG",
@@ -22,5 +21,5 @@
     ],
     "Publication": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e",
     "Source Code": "https://github.com/AI-amateur/DMPNN-hERG",
-    "License": "MIT"
+    "License": "None"
 }

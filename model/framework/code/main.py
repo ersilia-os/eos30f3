@@ -9,22 +9,10 @@ import chemprop
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-print('input_file',input_file)
-print('output_file',output_file)
-
 #current file directory
 root = os.path.dirname(os.path.abspath(__file__))
 dir_model= os.path.abspath(os.path.join(root,"..", "..","checkpoints", "I_train_rand"))
-print('root',root)
 
-
-print('starting process....')
-
-check_fold_relative_path = "../checkpoints/I_train_rand"
-check_fold_absolute_path= os.path.abspath(os.path.join(root,"..", "..","checkpoints", "I_train_rand"))
-print('check_fold_absolute_path',check_fold_absolute_path)
-
-print(chemprop)
 
 # my model
 def my_model(smiles_list):
