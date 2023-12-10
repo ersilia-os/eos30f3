@@ -99,7 +99,7 @@ new_df = pd.DataFrame({
 print(new_df)
 print("hello")
 
-# To save the new dataframe to a CSV file, you can use the following:
+# To save the new dataframe to a CSV file, 
 
 
 prediction_absolute_path= os.path.abspath(os.path.join(root,"..",output_file))
