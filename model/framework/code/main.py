@@ -49,12 +49,10 @@ for i in range(5):
 
 print('done')
 
-# os.rename(output_file, "emma_p_I_test.csv")
-
 print('renamed')
 
 
-# DMPNN-hERG/example_notebook/emma_p_I_test.csv0.csv
+# DMPNN-hERG/example_notebook/P_I_test.csv0.csv
 relative_path0 = "P_I_test.csv0.csv"
 predict_absolute_path0 = os.path.join(root, relative_path0)
 print('predict_absolute_path0',predict_absolute_path0)
@@ -101,10 +99,8 @@ print("hello")
 
 # To save the new dataframe to a CSV file, 
 
-
 prediction_absolute_path= os.path.abspath(os.path.join(root,"..",output_file))
 new_df.to_csv(prediction_absolute_path, index=False) 
-
 
 print('finally done')
 

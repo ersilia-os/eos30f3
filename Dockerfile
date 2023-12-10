@@ -14,11 +14,5 @@ RUN pip install hyperopt
 RUN pip install protobuf==3.18.3
 
 
-
-# RUN pip install --upgrade protobuf==3.20.0
-# #RUN pip install protoc >= 3.19.0
-# RUN pip install --upgrade bentoml
-# ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
-
 WORKDIR /repo
 COPY . /repo
