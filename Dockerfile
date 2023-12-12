@@ -7,6 +7,7 @@ RUN pip install typed-argument-parser==1.6.1
 RUN pip install scikit-learn
 RUN pip install torch
 RUN pip install pandas
+RUN pip install tensorboardX==2.0
 RUN pip install scipy>=1.4.1
 RUN pip install hyperopt
 RUN pip install protobuf==3.18.3
