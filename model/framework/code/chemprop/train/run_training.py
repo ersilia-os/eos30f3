@@ -7,7 +7,8 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning) 
 import pandas as pd
-#from tensorboardX import SummaryWriter
+#from tensorboardX 
+import SummaryWriter
 import torch
 from tqdm import trange
 from torch.optim.lr_scheduler import ExponentialLR
