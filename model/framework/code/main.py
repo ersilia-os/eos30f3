@@ -2,19 +2,30 @@
 import os
 import csv
 import sys
-from rdkit import Chem
-from rdkit.Chem.Descriptors import MolWt
+import subprocess
+import chemprop
 
 # parse arguments
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-# current file directory
+#current file directory
 root = os.path.dirname(os.path.abspath(__file__))
+dir_model= os.path.abspath(os.path.join(root,"..", "..","checkpoints", "I_train_rand"))
+
 
 # my model
 def my_model(smiles_list):
-    return [MolWt(Chem.MolFromSmiles(smi)) for smi in smiles_list]
+    
+    smiles_list_list= [[smiles] for smiles in smiles_list]  
+    arguments = [
+    '--test_path', '/dev/null',
+    '--preds_path', '/dev/null',
+    '--checkpoint_dir', dir_model,
+    ]
+    args = chemprop.args.PredictArgs().parse_args(arguments)
+    preds = chemprop.train.make_predictions(args=args, smiles=smiles_list_list)
+    return preds
 
 
 # read SMILES from .csv file, assuming one column with header
