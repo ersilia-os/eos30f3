@@ -7,8 +7,7 @@ import numpy as np
 import warnings
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning) 
 import pandas as pd
-#from tensorboardX 
-import SummaryWriter
+#from tensorboardX import SummaryWriter
 import torch
 from tqdm import trange
 from torch.optim.lr_scheduler import ExponentialLR
@@ -244,13 +243,13 @@ def run_training(args: TrainArgs,
 
     # Train ensemble of models
     for model_idx in range(args.ensemble_size):
-        # Tensorboard writer
-        save_dir = os.path.join(args.save_dir, f'model_{model_idx}')
-        makedirs(save_dir)
-        try:
-            writer = SummaryWriter(log_dir=save_dir)
-        except:
-            writer = SummaryWriter(logdir=save_dir)
+        # # Tensorboard writer
+        # save_dir = os.path.join(args.save_dir, f'model_{model_idx}')
+        # makedirs(save_dir)
+        # try:
+        #     writer = SummaryWriter(log_dir=save_dir)
+        # except:
+        #     writer = SummaryWriter(logdir=save_dir)
 
         # Load/build model
         if args.checkpoint_paths is not None:
