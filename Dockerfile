@@ -11,8 +11,6 @@ RUN pip install pandas
 RUN pip install tensorboardX==2.0
 RUN pip install scipy>=1.4.1
 RUN pip install hyperopt
-RUN pip install protobuf==3.18.3
-
 
 WORKDIR /repo
 COPY . /repo
