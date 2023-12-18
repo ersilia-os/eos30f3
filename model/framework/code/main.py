@@ -2,14 +2,14 @@
 import os
 import csv
 import sys
-import subprocess
-import chemprop
 
+import chemprop
 # parse arguments
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-#current file directory
+
+# current file directory
 root = os.path.dirname(os.path.abspath(__file__))
 dir_model= os.path.abspath(os.path.join(root,"..", "..","checkpoints", "I_train_rand"))
 
@@ -23,6 +23,7 @@ def my_model(smiles_list):
     '--preds_path', '/dev/null',
     '--checkpoint_dir', dir_model,
     ]
+
     args = chemprop.args.PredictArgs().parse_args(arguments)
     preds = chemprop.train.make_predictions(args=args, smiles=smiles_list_list)
     return preds
@@ -45,6 +46,6 @@ assert input_len == output_len
 # write output in a .csv file
 with open(output_file, "w") as f:
     writer = csv.writer(f)
-    writer.writerow(["value"])  # header
+    writer.writerow(["activity"])  # header
     for o in outputs:
-        writer.writerow([o])
+        writer.writerow(o)
