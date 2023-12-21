@@ -21,7 +21,7 @@ This model leverages the ChemProp network (D-MPNN, see original Stokes et al, Ce
 
 * [Publication](https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e)
 * [Source Code](https://github.com/AI-amateur/DMPNN-hERG)
-* Ersilia contributor: [russelljeffrey](https://github.com/russelljeffrey)
+* Ersilia contributor: [leilayesufu](https://github.com/leilayesufu)
 
 ## Ersilia model URLs
 * [GitHub](https://github.com/ersilia-os/eos30f3)
