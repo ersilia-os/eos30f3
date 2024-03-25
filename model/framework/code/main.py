@@ -11,7 +11,7 @@ output_file = sys.argv[2]
 
 # current file directory
 root = os.path.dirname(os.path.abspath(__file__))
-dir_model= os.path.abspath(os.path.join(root,"..", "..","checkpoints", "I_train_rand"))
+dir_model= os.path.abspath(os.path.join(root,"..", "..","checkpoints", "S3_no_fp_random_check"))
 
 
 # my model
@@ -46,6 +46,7 @@ assert input_len == output_len
 # write output in a .csv file
 with open(output_file, "w") as f:
     writer = csv.writer(f)
-    writer.writerow(["activity"])  # header
+    writer.writerow((["activity"]))  # header
     for o in outputs:
-        writer.writerow(o)
+        writer.writerow([o[0]])
+        

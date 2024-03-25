@@ -26,7 +26,7 @@ This model leverages the ChemProp network (D-MPNN, see original Stokes et al, Ce
 ## Ersilia model URLs
 * [GitHub](https://github.com/ersilia-os/eos30f3)
 * [AWS S3](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos30f3.zip)
-* [DockerHub](https://hub.docker.com/r/ersiliaos/eos30f3) (AMD64)
+* [DockerHub](https://hub.docker.com/r/ersiliaos/eos30f3) (AMD64, ARM64)
 
 ## Citation
 
