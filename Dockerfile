@@ -10,6 +10,7 @@ RUN pip install pandas==2.0.3
 RUN pip install scipy>=1.4.1
 RUN pip install hyperopt==0.2.7
 RUN pip install protobuf==3.18.3
+RUN conda install -c conda-forge xorg-libxrender xorg-libxtst
 
 
 WORKDIR /repo
