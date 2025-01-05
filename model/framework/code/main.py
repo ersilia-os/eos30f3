@@ -46,7 +46,7 @@ assert input_len == output_len
 # write output in a .csv file
 with open(output_file, "w") as f:
     writer = csv.writer(f)
-    writer.writerow((["activity"]))  # header
+    writer.writerow((["herg_inhibition_probability"]))  # header
     for o in outputs:
         writer.writerow([o[0]])
         
