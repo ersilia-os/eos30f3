@@ -3,21 +3,18 @@
     "Slug": "dmpnn-herg",
     "Status": "Ready",
     "Title": "Prediction of hERG channel blockers with directed message passing neural networks",
-    "Description": "This model leverages the ChemProp network (D-MPNN) to build a predictor of hERG-mediated cardiotoxicity. The model has been trained using a published dataset which contains 7889 molecules with several cut-offs for hERG blocking activity. The authors select a 10 uM cut-off. This implementation of the model does not use any specific featurizer, though the authors suggest the moe206 descriptors (closed-source) improve performance even further.\n",
+    "Description": "This model leverages the ChemProp network (D-MPNN) to build a predictor of hERG-mediated cardiotoxicity. The model has been trained using a published dataset which contains 7889 molecules with several cut-offs for hERG blocking activity. The authors select a 10 uM cut-off. This implementation of the model does not use any specific featurizer, though the authors suggest the moe206 descriptors (closed-source) improve performance even further.",
+    "Deployment": [
+        "Local"
+    ],
     "Source": "Local",
     "Source Type": "External",
+    "Task": "Annotation",
+    "Subtask": "Activity prediction",
     "Input": [
         "Compound"
     ],
     "Input Dimension": 1,
-    "Task": "Annotation",
-    "Subtask": "Activity prediction",
-    "Biomedical Area": [
-        "ADMET"
-    ],
-    "Target Organism": [
-        "Homo sapiens"
-    ],
     "Output": [
         "Score"
     ],
@@ -30,20 +27,25 @@
         "Toxicity",
         "Descriptor"
     ],
-    "Publication": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e",
+    "Biomedical Area": [
+        "ADMET"
+    ],
+    "Target Organism": [
+        "Homo sapiens"
+    ],
     "Publication Type": "Peer reviewed",
     "Publication Year": 2022,
+    "Publication": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e",
     "Source Code": "https://github.com/AI-amateur/DMPNN-hERG",
     "License": "None",
     "Contributor": "leilayesufu",
     "Incorporation Date": "2023-12-04",
+    "S3": "https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos30f3.zip",
     "DockerHub": "https://hub.docker.com/r/ersiliaos/eos30f3",
     "Docker Architecture": [
         "AMD64",
         "ARM64"
     ],
-    "S3": "https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos30f3.zip",
-    "Deployment": [
-        "Local"
-    ]
+    "Model Size": 34.0,
+    "Environment Size": 5366.0
 }
