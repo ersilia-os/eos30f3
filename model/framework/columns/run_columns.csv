@@ -1,2 +1,2 @@
 name,type,direction,description
-herg_inhibition_probability,float,low,Probability score of hERG inhibition
+herg_inhibition_probability,float,high,Probability score of hERG inhibition
