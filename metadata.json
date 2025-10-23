@@ -40,6 +40,8 @@
     "License": "None",
     "Contributor": "leilayesufu",
     "Incorporation Date": "2023-12-04",
+    "Last Packaging Date": "2025-10-23",
+    "Release": "v1.0.0",
     "S3": "https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos30f3.zip",
     "DockerHub": "https://hub.docker.com/r/ersiliaos/eos30f3",
     "Docker Architecture": [
@@ -48,10 +50,10 @@
     ],
     "Model Size": 34.0,
     "Environment Size": 5380.0,
-    "Image Size": 5310.09,
-    "Computational Performance 1": 41.38,
-    "Computational Performance 2": 31.55,
-    "Computational Performance 3": 35.23,
-    "Computational Performance 4": 210.47,
-    "Computational Performance 5": 1010.5
+    "Image Size": 5327.37,
+    "Computational Performance 1": 31.2,
+    "Computational Performance 2": 21.05,
+    "Computational Performance 3": 22.21,
+    "Computational Performance 4": 70.55,
+    "Computational Performance 5": 287.24
 }
