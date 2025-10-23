@@ -2,8 +2,7 @@
 
 This model leverages the ChemProp network (D-MPNN) to build a predictor of hERG-mediated cardiotoxicity. The model has been trained using a published dataset which contains 7889 molecules with several cut-offs for hERG blocking activity. The authors select a 10 uM cut-off. This implementation of the model does not use any specific featurizer, though the authors suggest the moe206 descriptors (closed-source) improve performance even further.
 
-This model was incorporated on 2023-12-04.
-
+This model was incorporated on 2023-12-04.Last packaged on 2025-10-23.
 
 ## Information
 ### Identifiers
@@ -42,12 +41,12 @@ Below are the **Output Columns** of the model:
 ### Resource Consumption
 - **Model Size (Mb):** `34`
 - **Environment Size (Mb):** `5380`
-- **Image Size (Mb):** `5310.09`
+- **Image Size (Mb):** `5327.37`
 
 **Computational Performance (seconds):**
-- 10 inputs: `41.38`
-- 100 inputs: `35.23`
-- 10000 inputs: `1010.5`
+- 10 inputs: `31.2`
+- 100 inputs: `22.21`
+- 10000 inputs: `287.24`
 
 ### References
 - **Source Code**: [https://github.com/AI-amateur/DMPNN-hERG](https://github.com/AI-amateur/DMPNN-hERG)
