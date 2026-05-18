@@ -50,7 +50,7 @@ Below are the **Output Columns** of the model:
 
 ### References
 - **Source Code**: [https://github.com/AI-amateur/DMPNN-hERG](https://github.com/AI-amateur/DMPNN-hERG)
-- **Publication**: [https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e](https://pubs.rsc.org/en/content/articlehtml/2022/ra/d1ra07956e)
+- **Publication**: [https://doi.org/10.1039/D1RA07956E](https://doi.org/10.1039/D1RA07956E)
 - **Publication Type:** `Peer reviewed`
 - **Publication Year:** `2022`
 - **Ersilia Contributor:** [leilayesufu](https://github.com/leilayesufu)
