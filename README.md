@@ -1,6 +1,6 @@
 # Prediction of hERG channel blockers with directed message passing neural networks
 
-This model leverages the ChemProp network (D-MPNN) to build a predictor of hERG-mediated cardiotoxicity. The model has been trained using a published dataset which contains 7889 molecules with several cut-offs for hERG blocking activity. The authors select a 10 uM cut-off. This implementation of the model does not use any specific featurizer, though the authors suggest the moe206 descriptors (closed-source) improve performance even further.
+Predicts blockade of the hERG potassium channel, the off-target most commonly responsible for cardiac safety failures. Shan and colleagues applied a directed message-passing neural network, which propagates information along bonds rather than atoms and so distinguishes the direction a substructure is traversed. Training drew on assembled hERG activity data with actives defined by IC50 thresholds. Published hERG sets mix results from patch-clamp and binding assays run under different conditions, which limits how sharply any threshold can be drawn.
 
 This model was incorporated on 2023-12-04.Last packaged on 2025-10-23.
 
@@ -23,7 +23,7 @@ This model was incorporated on 2023-12-04.Last packaged on 2025-10-23.
 ### Output
 - **Output Dimension:** `1`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** Probability of blocking hERG (cut-off: 10uM)
+- **Interpretation:** Probability that a compound blocks the hERG potassium channel.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
