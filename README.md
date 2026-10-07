@@ -1,6 +1,6 @@
 # Prediction of hERG channel blockers with directed message passing neural networks
 
-Predicts blockade of the hERG potassium channel, the off-target most commonly responsible for cardiac safety failures. Shan and colleagues applied a directed message-passing neural network, which propagates information along bonds rather than atoms and so distinguishes the direction a substructure is traversed. Training drew on assembled hERG activity data with actives defined by IC50 thresholds. Published hERG sets mix results from patch-clamp and binding assays run under different conditions, which limits how sharply any threshold can be drawn.
+Predicts blockade of the hERG potassium channel, the off-target most commonly responsible for cardiac safety failures. Shan and colleagues applied a directed message-passing neural network, which propagates information along bonds rather than atoms and so distinguishes the direction a substructure is traversed. Training used Cai's collection of 7,889 compounds with blockers set at an IC50 of 10 uM, reaching AUC-ROC values around 0.95 in five-fold cross-validation. The checkpoint served here is the plain network, without the closed-source MOE descriptors behind the authors' best results.
 
 This model was incorporated on 2023-12-04.Last packaged on 2025-10-23.
 
@@ -23,7 +23,7 @@ This model was incorporated on 2023-12-04.Last packaged on 2025-10-23.
 ### Output
 - **Output Dimension:** `1`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** Probability that a compound blocks the hERG potassium channel.
+- **Interpretation:** Probability of hERG potassium channel blockade, with blockers labelled from IC50 values below 10 uM.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
