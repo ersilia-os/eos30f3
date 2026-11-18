@@ -1,8 +1,9 @@
 # Prediction of hERG channel blockers with directed message passing neural networks
 
-Predicts blockade of the hERG potassium channel, the off-target most commonly responsible for cardiac safety failures. Shan and colleagues applied a directed message-passing neural network, which propagates information along bonds rather than atoms and so distinguishes the direction a substructure is traversed. Training used Cai's collection of 7,889 compounds with blockers set at an IC50 of 10 uM, reaching AUC-ROC values around 0.95 in five-fold cross-validation. The checkpoint served here is the plain network, without the closed-source MOE descriptors behind the authors' best results.
+Predicts blockade of the hERG potassium channel, the off-target most commonly responsible for cardiac safety failures. Shan and colleagues applied a directed message-passing neural network, which propagates information along bonds rather than atoms and so distinguishes the direction a substructure is traversed. Training used Cais collection of 7,889 compounds with blockers set at an IC50 of 10 uM, reaching AUC-ROC values around 0.95 in five-fold cross-validation. The checkpoint served here is the plain network, without the closed-source MOE descriptors behind the authors best results.
 
-This model was incorporated on 2023-12-04.Last packaged on 2025-10-23.
+This model was incorporated on 2023-12-04.
+Last packaged on 2025-10-23.
 
 ## Information
 ### Identifiers
@@ -37,6 +38,7 @@ Below are the **Output Columns** of the model:
 - **DockerHub**: [https://hub.docker.com/r/ersiliaos/eos30f3](https://hub.docker.com/r/ersiliaos/eos30f3)
 - **Docker Architecture:** `AMD64`, `ARM64`
 - **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos30f3.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos30f3.zip)
+- **Apptainer**: [https://models-sif.s3.eu-north-1.amazonaws.com/eos30f3_v1.sif](https://models-sif.s3.eu-north-1.amazonaws.com/eos30f3_v1.sif)
 
 ### Resource Consumption
 - **Model Size (Mb):** `34`
